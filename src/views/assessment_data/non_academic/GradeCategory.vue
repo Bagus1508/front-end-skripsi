@@ -44,8 +44,6 @@ const selectedSchedule = ref();
 const cm = ref();
 
 const menuModel = ref([
-    /* {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedSchedule)},
-    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedSchedule)} */
     {label: 'Detail', icon: 'bi bi-eye', command: () => viewModal(selectedSchedule)},
 ]);
 
@@ -73,26 +71,11 @@ provide('showDeleteModal', showDeleteModal);
 provide('titleModal', titleModal);
 provide('modalType', modalType);
 
-// Fungsi untuk membuka modal
-const createModal = () => {
-    showCreateModal.value = true;
-    titleModal.value = 'Tambah Jadwal';
-    modalType.value = 'create';
-};
-
-const editModal = (data) => { 
-    showCreateModal.value = true;
-    titleModal.value = 'Edit Jadwal';
-    modalType.value = 'edit';
-
-    getData = Object.assign(getData, data.value);
-};
-
 const viewModal = (data) => {
     // Cek apakah data memiliki path atau route tujuan
     if (data) {
         router.push({
-            path: '/data-ujian/hasil-tes/detail',
+            path: '/data-nilai/non-akademik/daftar-nilai',
             query: data.query || {},
         });
     } else {
@@ -109,6 +92,9 @@ const deleteModal = () => {
 
 <template>
     <div class="mt-2">
+        <div class="w-1/4 border border-[#D9D9D9] mb-[20px] p-3 rounded-md shadow-lg bg-white">
+            <div class="text-lg font-medium">Kelas XII - A  </div>
+        </div>
         <div class="relative overflow-x-auto">
             <ContextMenu ref="cm" :model="menuModel" @hide="selectedSchedule = null" />
             <DataTable v-model:filters="filters" :value="examSchedules" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
@@ -128,9 +114,6 @@ const deleteModal = () => {
                                 <i class="bi bi-search mr-2 m-[5px]" />
                             </label>
                         </div>
-                        <div>
-                            <AddData v-model:showCreateModal="showCreateModal"/>
-                        </div>
                     </div>
 
                 </template>
@@ -143,9 +126,7 @@ const deleteModal = () => {
                         {{ slotProps.index !== undefined ? slotProps.index + 1 : "-" }}
                     </template>
                 </Column>
-                <Column field="schedule_range" sortable header="Jadwal"></Column>
-                <Column field="start_time" sortable header="Jam Mulai"></Column>
-                <Column field="end_time" sortable header="Jam Selesai"></Column>
+                <Column field="schedule_date" sortable header="Jadwal"></Column>
                 <Column field="subject" sortable header="Mata Pelajaran"></Column>
                 <Column field="category" sortable header="Kategori"></Column>
                 <Column field="user" sortable header="Guru Pengajar"></Column>
@@ -154,9 +135,6 @@ const deleteModal = () => {
             </DataTable>
         </div>
     </div>
-
-    <!-- Delete Form -->
-     <DeleteData v-model:showDeleteModal="showDeleteModal" />
 </template>
 
 <style scoped>

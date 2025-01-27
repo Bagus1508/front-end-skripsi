@@ -5,48 +5,29 @@ import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
 import router from '../../../routes/router';
 
-const examSchedules = ref([]);
+const school_class = ref([]);
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    subject: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    user: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    class_name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    category: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
-
-//Filter Key
-const filterKey = Object.keys(filters.value);
 
 const loading = ref(true);
 onMounted(async () => {
   try {
-    const response = await fetch('/exam_schedules.json');
-    let examSchedulesData = await response.json();
-
-    //Map Data
-    examSchedulesData = examSchedulesData.map(schedule => {
-        schedule.status = schedule.is_active ? 'Aktif' : 'Tidak Aktif';
-        schedule.schedule_range = `${schedule.start_date} - ${schedule.end_date}`;
-
-        return schedule;
-    });
-
-    examSchedules.value = examSchedulesData;
-
+    const response = await fetch('/school_class.json');
+    school_class.value = await response.json();
     loading.value = false;
   } catch (error) { 
-    console.error('Error fetching examSchedules:', error);
+    console.error('Error fetching school_class:', error);
   }
 });
 
-const selectedSchedule = ref();
+const selectedUser = ref();
 const cm = ref();
 
 const menuModel = ref([
-    /* {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedSchedule)},
-    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedSchedule)} */
-    {label: 'Detail', icon: 'bi bi-eye', command: () => viewModal(selectedSchedule)},
+    {label: 'View', icon: 'bi bi-eye', command: () => viewModal(selectedUser)},
 ]);
 
 const onRowContextMenu = (event) => {
@@ -74,32 +55,16 @@ provide('titleModal', titleModal);
 provide('modalType', modalType);
 
 // Fungsi untuk membuka modal
-const createModal = () => {
-    showCreateModal.value = true;
-    titleModal.value = 'Tambah Jadwal';
-    modalType.value = 'create';
-};
-
-const editModal = (data) => { 
-    showCreateModal.value = true;
-    titleModal.value = 'Edit Jadwal';
-    modalType.value = 'edit';
-
-    getData = Object.assign(getData, data.value);
-};
-
 const viewModal = (data) => {
-    // Cek apakah data memiliki path atau route tujuan
     if (data) {
         router.push({
-            path: '/data-ujian/hasil-tes/detail',
+            path: '/data-nilai/akademik/kategori',
             query: data.query || {},
         });
     } else {
         console.error("Data tidak valid atau tidak memiliki path.");
     }
 };
-
 
 const deleteModal = () => {
     showDeleteModal.value = true;
@@ -110,13 +75,13 @@ const deleteModal = () => {
 <template>
     <div class="mt-2">
         <div class="relative overflow-x-auto">
-            <ContextMenu ref="cm" :model="menuModel" @hide="selectedSchedule = null" />
-            <DataTable v-model:filters="filters" :value="examSchedules" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
+            <ContextMenu ref="cm" :model="menuModel" @hide="selectedUser = null" />
+            <DataTable v-model:filters="filters" :value="school_class" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                contextMenu v-model:contextMenuSelection="selectedSchedule"
+                contextMenu v-model:contextMenuSelection="selectedUser"
                 @rowContextmenu="onRowContextMenu"
                 dataKey="id" :loading="loading"
-                :globalFilterFields="filterKey"
+                :globalFilterFields="['name']"
                 scrollable scrollHeight="400px">
                 <template #header>
                     <div class="w-full flex justify-between mb-2">
@@ -127,9 +92,6 @@ const deleteModal = () => {
                             <label for="search" class="flex items-center mb-[10px]">
                                 <i class="bi bi-search mr-2 m-[5px]" />
                             </label>
-                        </div>
-                        <div>
-                            <AddData v-model:showCreateModal="showCreateModal"/>
                         </div>
                     </div>
 
@@ -143,14 +105,7 @@ const deleteModal = () => {
                         {{ slotProps.index !== undefined ? slotProps.index + 1 : "-" }}
                     </template>
                 </Column>
-                <Column field="schedule_range" sortable header="Jadwal"></Column>
-                <Column field="start_time" sortable header="Jam Mulai"></Column>
-                <Column field="end_time" sortable header="Jam Selesai"></Column>
-                <Column field="subject" sortable header="Mata Pelajaran"></Column>
-                <Column field="category" sortable header="Kategori"></Column>
-                <Column field="user" sortable header="Guru Pengajar"></Column>
-                <Column field="class_name" sortable header="Kelas"></Column>
-                <Column field="status" sortable header="Status"></Column>
+                <Column field="name" sortable header="Kelas"></Column>
             </DataTable>
         </div>
     </div>

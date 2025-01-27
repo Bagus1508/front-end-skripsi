@@ -22,7 +22,10 @@ provide('gender', gender);
 </script>
 
 <template>
-    <div id="app" class="flex h-screen overflow-hidden">
+    <div id="app" v-if="this.$route.meta.layout == 'AuthLayout'">
+      <router-view/>
+    </div>
+    <div id="app" class="flex h-screen overflow-hidden" v-else>
         <router-view name="sidebar"></router-view>
         <div class="flex flex-col w-full overflow-auto">
           <router-view name="navbar"></router-view>

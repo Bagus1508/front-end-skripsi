@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import AuthLayout from '../Auth.vue';
 import AppNavbar from '../layout/AppNavbar.vue';
 import AppSidebar from '../layout/AppSidebar.vue';
 import Dashboard from '../views/Dashboard.vue';
-import QuestionsBank from '../views/QuestionsBank.vue';
 import AnalyzeResultsGroup from '../views/analyze_results/Group.vue'
 import AnalyzeResultsPersonal from '../views/analyze_results/Personal.vue'
 import Account from '../views/master/account/Account.vue';
@@ -17,8 +17,34 @@ import ScheduleExam from '../views/exam_data/question_bank/schedule_exam/Schedul
 import QuestionList from '../views/exam_data/question_bank/questions_list/QuestionList.vue';
 import Exam from '../views/exam_data/question_bank/exam_test/Exam.vue';
 import ResultTest from '../views/exam_data/result_test/ResultTest.vue';
+import DetailResultTest from '../views/exam_data/result_test/DetailResultTest.vue';
+import Academic from '../views/assessment_data/academic/Academic.vue';
+import GradeCategory from '../views/assessment_data/academic/GradeCategory.vue';
+import ListGrade from '../views/assessment_data/academic/ListGrade.vue';
+import NonAcademic from '../views/assessment_data/non_academic/NonAcademic.vue';
+import GradeCategoryNon from '../views/assessment_data/non_academic/GradeCategory.vue';
+import ListGradeNon from '../views/assessment_data/non_academic/ListGrade.vue';
+import PerformanceAcademic from '../views/assessment_data/performance_academic/PerformanceAcademic.vue';
+import DetailPerformanceAcademic from '../views/assessment_data/performance_academic/DetailPerformanceAcademic.vue';
+import Login from '../views/auth/Login.vue';
 
 const routes = [
+  /* Login */
+  {
+    path: '/login',
+    name: 'login',
+    components: {
+      default: Login,
+    },
+    meta: { 
+      layout: 'AuthLayout',
+      title: 'Login',
+      description: 'Login',
+      pathName: 'Login',
+    },
+  },
+
+  /* Dashboard */
   {
     path: '/',
     name: 'dashboard',
@@ -96,6 +122,125 @@ const routes = [
     meta: { 
       title: 'Hasil Tes',
       pathName: 'Data Ujian - Hasil Tes',
+    },
+  },
+  {
+    path: '/data-ujian/hasil-tes/detail',
+    name: 'hasil-tes-detail',
+    components: {
+      navbar: AppNavbar,
+      default: DetailResultTest,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Detail Hasil Tes',
+      pathName: 'Data Ujian - Hasil Tes - Detail',
+    },
+  },
+
+  /* Data Nilai */
+  {
+    path: '/data-nilai/akademik',
+    name: 'data-nilai-akademik',
+    components: {
+      navbar: AppNavbar,
+      default: Academic,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Data Nilai Akademik',
+      pathName: 'Data Nilai - Akademik',
+    },
+  },
+  {
+    path: '/data-nilai/akademik/kategori',
+    name: 'data-nilai-akademik-kategori',
+    components: {
+      navbar: AppNavbar,
+      default: GradeCategory,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Kategori Nilai Akademik',
+      pathName: 'Data Nilai - Akademik - Kategori',
+    },
+  },
+  {
+    path: '/data-nilai/akademik/daftar-nilai',
+    name: 'data-nilai-akademik-daftar-nilai',
+    components: {
+      navbar: AppNavbar,
+      default: ListGrade,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Daftar Nilai Akademik',
+      pathName: 'Data Nilai - Akademik - Daftar Nilai',
+    },
+  },
+  {
+    path: '/data-nilai/non-akademik',
+    name: 'data-nilai-non-akademik',
+    components: {
+      navbar: AppNavbar,
+      default: NonAcademic,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Data Nilai Non Akademik',
+      pathName: 'Data Nilai - Non Akademik',
+    },
+  },
+  {
+    path: '/data-nilai/non-akademik/kategori',
+    name: 'data-nilai-non-akademik-kategori',
+    components: {
+      navbar: AppNavbar,
+      default: GradeCategoryNon,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Kategori Nilai Non Akademik',
+      pathName: 'Data Nilai - Non Akademik - Kategori',
+    },
+  },
+  {
+    path: '/data-nilai/non-akademik/daftar-nilai',
+    name: 'data-nilai-non-akademik-daftar-nilai',
+    components: {
+      navbar: AppNavbar,
+      default: ListGradeNon,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Daftar Nilai Non Akademik',
+      pathName: 'Data Nilai - Non Akademik - Daftar Nilai',
+    },
+  },
+  {
+    path: '/data-nilai/prestasi',
+    name: 'data-nilai-prestasi',
+    components: {
+      navbar: AppNavbar,
+      default: PerformanceAcademic,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Daftar Nilai Prestasi',
+      pathName: 'Data Nilai - Prestasi',
+    },
+  },
+  {
+    path: '/data-nilai/prestasi/detail',
+    name: 'data-nilai-prestasi-detail',
+    components: {
+      navbar: AppNavbar,
+      default: DetailPerformanceAcademic,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Detail Nilai Prestasi',
+      pathName: 'Data Nilai - Prestasi - Detail',
     },
   },
 

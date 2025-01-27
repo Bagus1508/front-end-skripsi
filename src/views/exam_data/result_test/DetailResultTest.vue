@@ -5,7 +5,7 @@ import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
 import router from '../../../routes/router';
 
-const examSchedules = ref([]);
+const testResults = ref([]);
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -21,22 +21,22 @@ const filterKey = Object.keys(filters.value);
 const loading = ref(true);
 onMounted(async () => {
   try {
-    const response = await fetch('/exam_schedules.json');
-    let examSchedulesData = await response.json();
+    const response = await fetch('/test_results.json');
+    let testResultsData = await response.json();
 
     //Map Data
-    examSchedulesData = examSchedulesData.map(schedule => {
+    testResultsData = testResultsData.map(schedule => {
         schedule.status = schedule.is_active ? 'Aktif' : 'Tidak Aktif';
         schedule.schedule_range = `${schedule.start_date} - ${schedule.end_date}`;
 
         return schedule;
     });
 
-    examSchedules.value = examSchedulesData;
+    testResults.value = testResultsData;
 
     loading.value = false;
   } catch (error) { 
-    console.error('Error fetching examSchedules:', error);
+    console.error('Error fetching testResults:', error);
   }
 });
 
@@ -44,9 +44,9 @@ const selectedSchedule = ref();
 const cm = ref();
 
 const menuModel = ref([
-    /* {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedSchedule)},
-    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedSchedule)} */
+    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedSchedule)},
     {label: 'Detail', icon: 'bi bi-eye', command: () => viewModal(selectedSchedule)},
+    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedSchedule)}
 ]);
 
 const onRowContextMenu = (event) => {
@@ -92,7 +92,7 @@ const viewModal = (data) => {
     // Cek apakah data memiliki path atau route tujuan
     if (data) {
         router.push({
-            path: '/data-ujian/hasil-tes/detail',
+            path: '/data-ujian/bank-soal/daftar-soal',
             query: data.query || {},
         });
     } else {
@@ -111,10 +111,8 @@ const deleteModal = () => {
     <div class="mt-2">
         <div class="relative overflow-x-auto">
             <ContextMenu ref="cm" :model="menuModel" @hide="selectedSchedule = null" />
-            <DataTable v-model:filters="filters" :value="examSchedules" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
+            <DataTable v-model:filters="filters" :value="testResults" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                contextMenu v-model:contextMenuSelection="selectedSchedule"
-                @rowContextmenu="onRowContextMenu"
                 dataKey="id" :loading="loading"
                 :globalFilterFields="filterKey"
                 scrollable scrollHeight="400px">
@@ -143,14 +141,8 @@ const deleteModal = () => {
                         {{ slotProps.index !== undefined ? slotProps.index + 1 : "-" }}
                     </template>
                 </Column>
-                <Column field="schedule_range" sortable header="Jadwal"></Column>
-                <Column field="start_time" sortable header="Jam Mulai"></Column>
-                <Column field="end_time" sortable header="Jam Selesai"></Column>
-                <Column field="subject" sortable header="Mata Pelajaran"></Column>
-                <Column field="category" sortable header="Kategori"></Column>
-                <Column field="user" sortable header="Guru Pengajar"></Column>
-                <Column field="class_name" sortable header="Kelas"></Column>
-                <Column field="status" sortable header="Status"></Column>
+                <Column field="user_name" sortable header="Nama Siswa"></Column>
+                <Column field="score" sortable header="Nilai"></Column>
             </DataTable>
         </div>
     </div>

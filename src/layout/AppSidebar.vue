@@ -117,13 +117,13 @@ function toggleDropdown(dropdownId) {
             <!-- Data Nilai -->
             <li class="group mb-2">
                 <!-- Tombol utama dengan toggle dropdown -->
-                <a id="button-test-data" href="#" class="flex gap-5 p-2 rounded-lg text-[#737791] hover:text-white hover:bg-primary group" @click="toggleDropdown('dropdown-data-nilai')">
+                <a id="button-test-data" href="#" class="flex gap-5 p-2 rounded-lg text-[#737791] hover:text-white hover:bg-primary group" :class="isActiveRoute('/data-nilai') ? activeStyleParent : ''" @click="toggleDropdown('dropdown-data-nilai')">
                     <div>                                
                         <svg width="30" height="30" viewBox="0 0 34 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="group-hover:text-white">
                             <path d="M23.3335 10.1734V6.66669C23.3335 4.00002 22.0002 2.66669 19.3335 2.66669H12.6668C10.0002 2.66669 8.66684 4.00002 8.66684 6.66669V10.08M5.68018 14.6934V21.32C5.68018 23.7467 5.68018 23.7467 7.97351 25.2934L14.2802 28.9334C15.2268 29.48 16.7735 29.48 17.7202 28.9334L24.0268 25.2934C26.3202 23.7467 26.3202 23.7467 26.3202 21.32V14.6934C26.3202 12.2667 26.3202 12.2667 24.0268 10.72L17.7202 7.08002C16.7735 6.53335 15.2268 6.53335 14.2802 7.08002L7.97351 10.72C5.68018 12.2667 5.68018 12.2667 5.68018 14.6934ZM16.8402 14.6534L17.6002 15.84C17.7202 16.0267 17.9868 16.2134 18.1868 16.2667L19.5468 16.6134C20.3868 16.8267 20.6135 17.5467 20.0668 18.2134L19.1735 19.2934C19.0402 19.4667 18.9335 19.7734 18.9468 19.9867L19.0268 21.3867C19.0802 22.2534 18.4668 22.6934 17.6668 22.3734L16.3602 21.8534C16.1602 21.7734 15.8268 21.7734 15.6268 21.8534L14.3202 22.3734C13.5202 22.6934 12.9068 22.24 12.9602 21.3867L13.0402 19.9867C13.0535 19.7734 12.9468 19.4534 12.8135 19.2934L11.9202 18.2134C11.3735 17.5467 11.6002 16.8267 12.4402 16.6134L13.8002 16.2667C14.0135 16.2134 14.2802 16.0134 14.3868 15.84L15.1468 14.6534C15.6268 13.9334 16.3735 13.9334 16.8402 14.6534Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                    <div class="font-normal text-[#737791] flex justify-center items-center group-hover:text-white">
+                    <div class="font-normal text-[#737791] flex justify-center items-center group-hover:text-white" :class="isActiveRoute('/data-nilai') ? activeStyleParent : ''">
                         <div class="flex gap-3">
                             Data Nilai
                             <div class="flex text-center items-center justify-center group">
@@ -138,13 +138,13 @@ function toggleDropdown(dropdownId) {
                 <div id="dropdown-data-nilai" class="hidden">
                     <ul class="text-[#737791]">
                         <li class="p-2 text-white cursor-pointer rounded-lg text-center">
-                            <a class="hover:bg-opacity-50 hover:bg-[#D9D9D9] px-5 py-2 rounded-xl" href="#">Akademik</a>
+                            <a class="hover:bg-opacity-50 hover:bg-[#D9D9D9] px-5 py-2 rounded-xl" href="/data-nilai/akademik" :class="isActiveRoute('/data-nilai/akademik') ? activeStyleSubRoute : ''">Akademik</a>
                         </li>
                         <li class="p-2 text-white cursor-pointer rounded-lg text-center">
-                            <a class="hover:bg-opacity-50 hover:bg-[#D9D9D9] px-5 py-2 rounded-xl" href="#">Non Akademik</a>
+                            <a class="hover:bg-opacity-50 hover:bg-[#D9D9D9] px-5 py-2 rounded-xl" href="/data-nilai/non-akademik" :class="isActiveRoute('/data-nilai/non-akademik') ? activeStyleSubRoute : ''">Non Akademik</a>
                         </li>
                         <li class="p-2 text-white cursor-pointer rounded-lg text-center">
-                            <a class="hover:bg-opacity-50 hover:bg-[#D9D9D9] px-5 py-2 rounded-xl" href="#">Prestasi</a>
+                            <a class="hover:bg-opacity-50 hover:bg-[#D9D9D9] px-5 py-2 rounded-xl" href="/data-nilai/prestasi" :class="isActiveRoute('/data-nilai/prestasi') ? activeStyleSubRoute : ''">Prestasi</a>
                         </li>                            
                     </ul>
                 </div>

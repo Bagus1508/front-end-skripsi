@@ -4,7 +4,7 @@ import DistributionInterestChart from './components/chart/DistributionInterestCh
 </script>
 
 <template>
-    <div class="container p-5">
+    <div class="container">
         <div class="flex justify-between">
             <div class="text-[20px] font-medium text-[#151D48]">
                 Selamat Datang, Bagus Adianto!
