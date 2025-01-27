@@ -1,0 +1,62 @@
+[
+  {
+      "id": 1,
+      "name": "Ujian Tengah Semester",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 2,
+      "name": "Ujian Akhir Semester",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 3,
+      "name": "Ujian Praktik",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 4,
+      "name": "Tugas Mandiri",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 5,
+      "name": "Tugas Kelompok",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 6,
+      "name": "Ujian Mid",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 7,
+      "name": "Ujian Seleksi",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 8,
+      "name": "Ujian Keterampilan",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 9,
+      "name": "Ujian Pencapaian Kompetensi",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  },
+  {
+      "id": 10,
+      "name": "Ujian Teori",
+      "created_at": "26-01-2025",
+      "updated_at": "26-01-2025"
+  }
+]

@@ -1,0 +1,102 @@
+[
+    {
+        "id": 1,
+        "schedule_id": 1,
+        "question": "Apa yang dimaksud dengan hukum Newton pertama?",
+        "answer": "Hukum yang menyatakan bahwa benda akan tetap diam atau bergerak lurus beraturan jika tidak ada gaya yang bekerja padanya.",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 2,
+        "schedule_id": 1,
+        "question": "Jika sebuah benda bermassa 2 kg dipercepat 3 m/s², berapa besar gaya yang bekerja pada benda tersebut?",
+        "answer": "6 N",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 3,
+        "schedule_id": 1,
+        "question": "Apa rumus untuk menghitung energi kinetik?",
+        "answer": "Ek = 1/2 mv²",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 4,
+        "schedule_id": 1,
+        "question": "Jelaskan apa itu percepatan gravitasi dan nilainya di bumi.",
+        "answer": "Percepatan gravitasi adalah percepatan yang dialami benda akibat tarikan gravitasi bumi. Nilainya adalah 9,8 m/s².",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 5,
+        "schedule_id": 1,
+        "question": "Sebutkan satuan dalam sistem SI untuk gaya.",
+        "answer": "Newton (N)",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 6,
+        "schedule_id": 1,
+        "question": "Apa hukum Archimedes?",
+        "answer": "Benda yang dicelupkan ke dalam fluida akan mengalami gaya angkat ke atas sebesar berat fluida yang dipindahkan.",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 7,
+        "schedule_id": 1,
+        "question": "Bagaimana cara menghitung momentum sebuah benda?",
+        "answer": "Momentum (p) dihitung dengan rumus p = mv, di mana m adalah massa dan v adalah kecepatan.",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 8,
+        "schedule_id": 1,
+        "question": "Sebutkan jenis-jenis gelombang berdasarkan arah rambatnya.",
+        "answer": "Gelombang transversal dan gelombang longitudinal.",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 9,
+        "schedule_id": 1,
+        "question": "Apa yang dimaksud dengan daya dalam fisika?",
+        "answer": "Daya adalah laju perubahan energi atau usaha yang dilakukan per satuan waktu.",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    },
+    {
+        "id": 10,
+        "schedule_id": 1,
+        "question": "Jelaskan apa itu usaha dan bagaimana cara menghitungnya.",
+        "answer": "Usaha adalah energi yang digunakan untuk memindahkan benda. Rumusnya adalah W = F × d × cos(θ).",
+        "grade": "XI",
+        "score": 10,
+        "created_at": "2025-01-26",
+        "updated_at": "2025-01-26"
+    }
+]

@@ -1,0 +1,93 @@
+[
+    {
+        "id": 1,
+        "user_name": "Bagus Adianto",
+        "category": "Ujian Tengah Semester",
+        "subject": "Fisika",
+        "score": 90,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 2,
+        "user_name": "Andi Setiawan",
+        "category": "Ujian Tengah Semester",
+        "subject": "Matematika",
+        "score": 85,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 3,
+        "user_name": "Rina Prasetya",
+        "category": "Ujian Tengah Semester",
+        "subject": "Kimia",
+        "score": 92,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 4,
+        "user_name": "Dina Safitri",
+        "category": "Ujian Tengah Semester",
+        "subject": "Biologi",
+        "score": 88,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 5,
+        "user_name": "Eka Purnama",
+        "category": "Ujian Tengah Semester",
+        "subject": "Fisika",
+        "score": 76,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 6,
+        "user_name": "Gilang Setiawan",
+        "category": "Ujian Tengah Semester",
+        "subject": "Matematika",
+        "score": 80,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 7,
+        "user_name": "Nina Yuliana",
+        "category": "Ujian Tengah Semester",
+        "subject": "Kimia",
+        "score": 95,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 8,
+        "user_name": "Budi Santoso",
+        "category": "Ujian Tengah Semester",
+        "subject": "Biologi",
+        "score": 83,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 9,
+        "user_name": "Siti Nurhaliza",
+        "category": "Ujian Tengah Semester",
+        "subject": "Fisika",
+        "score": 91,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 10,
+        "user_name": "Arief Hidayat",
+        "category": "Ujian Tengah Semester",
+        "subject": "Matematika",
+        "score": 78,
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    }
+]
+  

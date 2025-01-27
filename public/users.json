@@ -1,0 +1,182 @@
+[
+    {
+        "id": 1,
+        "username": "john_doe",
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "role": "admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 2,
+        "username": "jane_smith",
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 3,
+        "username": "emma_watson",
+        "name": "Emma Watson",
+        "email": "emma.watson@example.com",
+        "role": "student",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 4,
+        "username": "will_smith",
+        "name": "Will Smith",
+        "email": "will.smith@example.com",
+        "role": "admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 5,
+        "username": "michael_jordan",
+        "name": "Michael Jordan",
+        "email": "michael.jordan@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 6,
+        "username": "scarlett_johansson",
+        "name": "Scarlett Johansson",
+        "email": "scarlett.johansson@example.com",
+        "role": "student",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 7,
+        "username": "chris_hemsworth",
+        "name": "Chris Hemsworth",
+        "email": "chris.hemsworth@example.com",
+        "role": "admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 8,
+        "username": "natalie_portman",
+        "name": "Natalie Portman",
+        "email": "natalie.portman@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 9,
+        "username": "leonardo_dicaprio",
+        "name": "Leonardo DiCaprio",
+        "email": "leonardo.dicaprio@example.com",
+        "role": "student",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 10,
+        "username": "angelina_jolie",
+        "name": "Angelina Jolie",
+        "email": "angelina.jolie@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 1,
+        "username": "mark_zuckerberg",
+        "name": "Mark Zuckerberg",
+        "email": "mark.zuckerberg@example.com",
+        "role": "admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 2,
+        "username": "bill_gates",
+        "name": "Bill Gates",
+        "email": "bill.gates@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 3,
+        "username": "elon_musk",
+        "name": "Elon Musk",
+        "email": "elon.musk@example.com",
+        "role": "student",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 4,
+        "username": "jeff_bezos",
+        "name": "Jeff Bezos",
+        "email": "jeff.bezos@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 5,
+        "username": "tim_cook",
+        "name": "Tim Cook",
+        "email": "tim.cook@example.com",
+        "role": "admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 6,
+        "username": "sundar_pichai",
+        "name": "Sundar Pichai",
+        "email": "sundar.pichai@example.com",
+        "role": "student",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 7,
+        "username": "larry_page",
+        "name": "Larry Page",
+        "email": "larry.page@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 8,
+        "username": "sergey_brin",
+        "name": "Sergey Brin",
+        "email": "sergey.brin@example.com",
+        "role": "student",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 9,
+        "username": "satya_nadella",
+        "name": "Satya Nadella",
+        "email": "satya.nadella@example.com",
+        "role": "admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 10,
+        "username": "sheryl_sandberg",
+        "name": "Sheryl Sandberg",
+        "email": "sheryl.sandberg@example.com",
+        "role": "teacher",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    }
+]

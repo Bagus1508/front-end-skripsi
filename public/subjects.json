@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Fisika",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 2,
+    "name": "Matematika",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 3,
+    "name": "Kimia",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 4,
+    "name": "Biologi",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 5,
+    "name": "Bahasa Indonesia",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 6,
+    "name": "Bahasa Inggris",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 7,
+    "name": "Pendidikan Pancasila dan Kewarganegaraan",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 8,
+    "name": "Sejarah Indonesia",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 9,
+    "name": "Geografi",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 10,
+    "name": "Sosiologi",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 11,
+    "name": "Ekonomi",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 12,
+    "name": "Seni Budaya",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 13,
+    "name": "Olahraga",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 14,
+    "name": "Teknologi Informasi dan Komunikasi",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 15,
+    "name": "Pendidikan Agama Islam",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 16,
+    "name": "Pendidikan Agama Kristen",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 17,
+    "name": "Pendidikan Agama Katolik",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 18,
+    "name": "Pendidikan Agama Hindu",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 19,
+    "name": "Pendidikan Agama Buddha",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 20,
+    "name": "Pendidikan Agama Konghucu",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 21,
+    "name": "Bahasa Jepang",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 22,
+    "name": "Bahasa Mandarin",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 23,
+    "name": "Matematika Peminatan",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 24,
+    "name": "Fisika Peminatan",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 25,
+    "name": "Kimia Peminatan",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 26,
+    "name": "Biologi Peminatan",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 27,
+    "name": "Ilmu Pengetahuan Alam",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 28,
+    "name": "Ilmu Pengetahuan Sosial",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 29,
+    "name": "Bahasa Daerah",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  },
+  {
+    "id": 30,
+    "name": "Kewirausahaan",
+    "created_at": "26-01-2025",
+    "updated_at": "26-01-2025"
+  }
+]

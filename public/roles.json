@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "code": "admin",
+        "name": "Admin",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 2,
+        "code": "teacher",
+        "name": "Guru",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    },
+    {
+        "id": 3,
+        "code": "student",
+        "name": "Siswa",
+        "created_at": "26-01-2025",
+        "updated_at": "26-01-2025"
+    }
+]
