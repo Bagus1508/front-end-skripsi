@@ -15,10 +15,13 @@ const gender = [
   { value: false, name: 'Perempuan' }
 ];
 
+const baseURLApi = import.meta.env.VITE_BASE_URL;
+
 // Menyediakan data agar dapat diakses di komponen anak
 provide('roles', roles);
 provide('status', status);
 provide('gender', gender);
+provide('baseURLApi', baseURLApi);
 </script>
 
 <template>

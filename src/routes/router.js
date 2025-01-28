@@ -27,6 +27,7 @@ import ListGradeNon from '../views/assessment_data/non_academic/ListGrade.vue';
 import PerformanceAcademic from '../views/assessment_data/performance_academic/PerformanceAcademic.vue';
 import DetailPerformanceAcademic from '../views/assessment_data/performance_academic/DetailPerformanceAcademic.vue';
 import Login from '../views/auth/Login.vue';
+import { nextTick } from 'vue';
 
 const routes = [
   /* Login */
@@ -57,6 +58,7 @@ const routes = [
       title: 'Dashboard',
       description: 'Test Description',
       pathName: 'Dashboard',
+      requiresAuth: true
     },
   },
 
@@ -72,6 +74,7 @@ const routes = [
     meta: { 
       title: 'Bank Soal',
       pathName: 'Bank Soal - Jadwal',
+      requiresAuth: true
     },
   },
   {
@@ -85,6 +88,7 @@ const routes = [
     meta: { 
       title: 'Daftar Soal',
       pathName: 'Bank Soal - Jadwal - Daftar Soal',
+      requiresAuth: true
     },
   },
   {
@@ -96,6 +100,7 @@ const routes = [
     meta: { 
       title: 'Simulasi Ujian',
       pathName: 'Simulasi Ujian',
+      requiresAuth: true
     },
   },
   {
@@ -109,6 +114,7 @@ const routes = [
     meta: { 
       title: 'Kategori Ujian',
       pathName: 'Kategori Ujian',
+      requiresAuth: true
     },
   },
   {
@@ -122,6 +128,7 @@ const routes = [
     meta: { 
       title: 'Hasil Tes',
       pathName: 'Data Ujian - Hasil Tes',
+      requiresAuth: true
     },
   },
   {
@@ -135,6 +142,7 @@ const routes = [
     meta: { 
       title: 'Detail Hasil Tes',
       pathName: 'Data Ujian - Hasil Tes - Detail',
+      requiresAuth: true
     },
   },
 
@@ -150,6 +158,7 @@ const routes = [
     meta: { 
       title: 'Data Nilai Akademik',
       pathName: 'Data Nilai - Akademik',
+      requiresAuth: true
     },
   },
   {
@@ -163,6 +172,7 @@ const routes = [
     meta: { 
       title: 'Kategori Nilai Akademik',
       pathName: 'Data Nilai - Akademik - Kategori',
+      requiresAuth: true
     },
   },
   {
@@ -176,6 +186,7 @@ const routes = [
     meta: { 
       title: 'Daftar Nilai Akademik',
       pathName: 'Data Nilai - Akademik - Daftar Nilai',
+      requiresAuth: true
     },
   },
   {
@@ -189,6 +200,7 @@ const routes = [
     meta: { 
       title: 'Data Nilai Non Akademik',
       pathName: 'Data Nilai - Non Akademik',
+      requiresAuth: true
     },
   },
   {
@@ -202,6 +214,7 @@ const routes = [
     meta: { 
       title: 'Kategori Nilai Non Akademik',
       pathName: 'Data Nilai - Non Akademik - Kategori',
+      requiresAuth: true
     },
   },
   {
@@ -215,6 +228,7 @@ const routes = [
     meta: { 
       title: 'Daftar Nilai Non Akademik',
       pathName: 'Data Nilai - Non Akademik - Daftar Nilai',
+      requiresAuth: true
     },
   },
   {
@@ -228,6 +242,7 @@ const routes = [
     meta: { 
       title: 'Daftar Nilai Prestasi',
       pathName: 'Data Nilai - Prestasi',
+      requiresAuth: true
     },
   },
   {
@@ -241,6 +256,7 @@ const routes = [
     meta: { 
       title: 'Detail Nilai Prestasi',
       pathName: 'Data Nilai - Prestasi - Detail',
+      requiresAuth: true
     },
   },
 
@@ -256,6 +272,7 @@ const routes = [
     meta: { 
       title: 'Hasil Analisis Kelompok',
       pathName: 'Laporan Analisis',
+      requiresAuth: true
     },
   },
   {
@@ -269,6 +286,7 @@ const routes = [
     meta: { 
       title: 'Hasil Analisis Individu',
       pathName: 'Laporan Analisis',
+      requiresAuth: true
     },
   },
   {
@@ -282,6 +300,7 @@ const routes = [
     meta: { 
       title: 'Data Akun',
       pathName: 'Master - Data Akun',
+      requiresAuth: true
     },
   },
   {
@@ -295,6 +314,7 @@ const routes = [
     meta: { 
       title: 'Data Siswa',
       pathName: 'Master - Data Siswa',
+      requiresAuth: true
     },
   },
   {
@@ -308,6 +328,7 @@ const routes = [
     meta: { 
       title: 'Data Guru',
       pathName: 'Master - Data Guru',
+      requiresAuth: true
     },
   },
   {
@@ -321,6 +342,7 @@ const routes = [
     meta: { 
       title: 'Data Kelas',
       pathName: 'Master - Data Kelas',
+      requiresAuth: true
     },
   },
   {
@@ -334,6 +356,7 @@ const routes = [
     meta: { 
       title: 'Data Mata Pelajaran',
       pathName: 'Master - Data Mata Pelajaran',
+      requiresAuth: true
     },
   },
   {
@@ -347,6 +370,7 @@ const routes = [
     meta: { 
       title: 'Data Jadwal',
       pathName: 'Master - Data Jadwal',
+      requiresAuth: true
     },
   },
   {
@@ -360,6 +384,7 @@ const routes = [
     meta: { 
       title: 'Data Kategori',
       pathName: 'Master - Data Kategori',
+      requiresAuth: true
     },
   },
   {
@@ -373,6 +398,7 @@ const routes = [
     meta: { 
       title: 'Hak Akses',
       pathName: 'Master - Hak Akses',
+      requiresAuth: true
     },
   },
 ];
@@ -394,6 +420,14 @@ router.beforeEach((to) => {
   const defaultTitle = 'Kenalin | ';
 
   document.title = defaultTitle + title || defaultTitle  
+
+  const isAuthenticated = localStorage.getItem('jwt');
+
+  if (to.meta.requiresAuth && (!isAuthenticated || isAuthenticated === 'null')) {
+    return { path: '/login' }; // Redirect ke halaman login
+  }
+  // Jika sudah login atau tidak butuh autentikasi, lanjutkan
+  return true;
 })
 
 export default router;

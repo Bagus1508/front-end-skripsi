@@ -19,9 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-const route = useRoute(); // Ambil objek $route
+const route = useRoute();
+const router = useRouter();
 const pageTitle = computed(() => route.meta.title || 'Default Title');
 const pathName = computed(() => route.meta.pathName || 'Default Path');
 
@@ -30,6 +31,20 @@ import { defineProps } from 'vue';
 const props = defineProps({
   publicPath: String,
 });
+
+const logout = () => {
+  try {
+    // Hapus token dari localStorage
+    localStorage.removeItem('jwt');
+    
+    // Arahkan ke halaman login
+    router.push('/login');
+  } catch (error) {
+    // Jika terjadi error, tampilkan pesan error
+    console.error('Gagal logout:', error.message);
+  }
+};
+
 
 </script>
 
@@ -83,7 +98,7 @@ const props = defineProps({
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100">Pengaturan Akun</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100" @click="logout">Logout</a>
                         </li>
                     </ul>
                 </div>

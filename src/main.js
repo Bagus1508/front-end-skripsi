@@ -21,7 +21,6 @@ import IconField from 'primevue/iconfield';
 import Dialog from 'primevue/dialog';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-
 const app = createApp(App);
 
 app.use(router); // Daftarkan router

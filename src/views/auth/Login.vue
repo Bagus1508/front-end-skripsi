@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+const baseURLApi = inject('baseURLApi');
 
 const username = ref('');
 const password = ref('');
@@ -12,14 +13,14 @@ const router = useRouter();
 const login = async () => {
   try {
     // Kirim kredensial ke API
-    const response = await axios.post('http://localhost:3000/api/auth/login', {
+    const response = await axios.post(`${baseURLApi}/auth/login`, {
       username: username.value,
       password: password.value
     });
 
     // Jika login berhasil, simpan token
     const token = response.data.data.token;
-    localStorage.setItem('jwt', token); // Menyimpan token di localStorage
+    localStorage.setItem('jwt', token);
 
     router.push('/'); // Redirect ke halaman dashboard atau yang diinginkan
   } catch (error) {
@@ -27,6 +28,7 @@ const login = async () => {
     errorMessage.value = error.response ? error.response.data.messages : 'Terjadi kesalahan';
   }
 };
+
 </script>
 
 <template>
@@ -39,14 +41,15 @@ const login = async () => {
           <div class="flex my-[20px]">
             <img src="/image/logo_sma.png" alt="profile image" class="mx-auto rounded-full" height="100" width="100">
           </div>
+          <span class="text-red-600">{{ errorMessage }}</span>
           <div>
             <div class="mb-[10px]">
               <label for="username" class="text-[13px] text-[#5B5B5B] font-semibold mb-[10px]">Username</label>
-              <input id="username" type="text" class="bg-[#D9D9D9] w-full h-[40px] rounded-[10px]" v-model="username">
+              <input id="username" type="text" class="bg-[#D9D9D9] w-full h-[40px] rounded-[10px] px-3" v-model="username" required>
             </div>
             <div>
               <label for="password" class="text-[13px] text-[#5B5B5B] font-semibold mb-[10px]">Password</label>
-              <input id="password" type="password" class="bg-[#D9D9D9] w-full h-[40px] rounded-[10px]" v-model="password">
+              <input id="password" type="password" class="bg-[#D9D9D9] w-full h-[40px] rounded-[10px] px-3" required v-model="password">
             </div>
           </div>
           <button type="submit" class="w-full bg-[#5D5FEF] p-[10px] text-white font-semibold rounded-[10px] mt-5 text-[13px]">Login</button>
