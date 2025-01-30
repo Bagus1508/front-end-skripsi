@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted, reactive, provide } from 'vue';
+import { ref, onMounted, reactive, provide, inject } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
+const baseURLApi = inject('baseURLApi');
 
 const users = ref([]);
 
@@ -15,13 +16,17 @@ const filters = ref({
 const loading = ref(true);
 onMounted(async () => {
   try {
-    const response = await fetch('/users.json');
-    users.value = await response.json();
+    const response = await fetch(`${baseURLApi}/users`);
+    const result = await response.json();
+    
+    users.value = result.data;
+    
     loading.value = false;
   } catch (error) { 
     console.error('Error fetching users:', error);
   }
 });
+
 
 const selectedUser = ref();
 const cm = ref();

@@ -2,9 +2,9 @@
 import { provide } from 'vue';
 
 const roles = [
-  { value: 'admin', name: 'Admin' },
-  { value: 'teacher', name: 'Guru' },
-  { value: 'student', name: 'Siswa' }
+  { value: 1, name: 'Admin' },
+  { value: 2, name: 'Guru' },
+  { value: 3, name: 'Siswa' }
 ];
 const status = [
   { value: true, name: 'Aktif' },

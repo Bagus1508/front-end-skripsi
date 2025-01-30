@@ -84,13 +84,13 @@ provide('modalType', modalType);
 // Fungsi untuk membuka modal
 const createModal = () => {
     showCreateModal.value = true;
-    titleModal.value = 'Tambah Siswa';
+    titleModal.value = 'Tambah Nilai Siswa';
     modalType.value = 'create';
 };
 
 const editModal = (data) => { 
     showCreateModal.value = true;
-    titleModal.value = 'Edit Siswa';
+    titleModal.value = 'Edit Nilai Siswa';
     modalType.value = 'edit';
 
     getData = Object.assign(getData, data.value);
@@ -98,7 +98,7 @@ const editModal = (data) => {
 
 const viewModal = (data) => {
     showCreateModal.value = true;
-    titleModal.value = 'Detail Siswa';
+    titleModal.value = 'Detail Nilai Siswa';
     modalType.value = 'show';
 
     getData = Object.assign(getData, data.value);

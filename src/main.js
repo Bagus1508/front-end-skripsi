@@ -20,11 +20,14 @@ import InputIcon from 'primevue/inputicon';
 import IconField from 'primevue/iconfield';
 import Dialog from 'primevue/dialog';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const app = createApp(App);
 
 app.use(router); // Daftarkan router
 app.use(VueApexCharts);
+app.use(VueSweetalert2);
 app.use(PrimeVue, {
     /* theme: {
         preset: Aura,
