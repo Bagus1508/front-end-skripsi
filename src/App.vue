@@ -7,8 +7,8 @@ const roles = [
   { value: 3, name: 'Siswa' }
 ];
 const status = [
-  { value: true, name: 'Aktif' },
-  { value: false, name: 'Tidak Aktif' }
+  { value: 1, name: 'Aktif' },
+  { value: 2, name: 'Tidak Aktif' }
 ];
 const gender = [
   { value: true, name: 'Laki - Laki' },
@@ -230,7 +230,7 @@ provide('baseURLApi', baseURLApi);
 .p-dialog-mask {
   background: rgba(0, 0, 0, 0.6) !important; /* Latar belakang gelap transparan */
   /* backdrop-filter: blur(1px) !important; */ /* Efek blur */
-  z-index: 9999999 !important;
+  z-index: 999 !important;
 }
 
 .p-dialog-header {
