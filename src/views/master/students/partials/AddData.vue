@@ -7,6 +7,7 @@ const baseURLApi = inject('baseURLApi');
 const roles = inject('roles');
 const statusDesc = inject('status');
 const genderDesc = inject('gender');
+const classesDesc = inject('classes');
 
 // Mengambil nilai visible dari parent
 const showCreateModal = inject('showCreateModal');
@@ -61,8 +62,6 @@ const handleSubmit = async () => {
       url = `${baseURLApi}/students/store`;
       method = 'post';
     }
-
-    console.log(getDataForm.value);
     
     const response = await axios({
       method: method,
@@ -79,6 +78,7 @@ const handleSubmit = async () => {
 
     // Tutup modal setelah berhasil
     showCreateModal.value = false;
+    router.go(0);
   } catch (error) {
     // Tangani error
     errorMessage.value = error.response ? error.response.data.messages : 'Terjadi kesalahan';
@@ -103,7 +103,7 @@ const handleSubmit = async () => {
             <form @submit.prevent="handleSubmit">
               <InputText label="NIS" name="number_id" v-model="getDataForm.number_id" />
               <InputText label="Nama" name="name" v-model="getDataForm.name"/>
-              <InputText label="Kelas" name="classes" v-model="getDataForm.classes"/>
+              <InputSelect label="Kelas" name="classes" :options="classesDesc" v-model="getDataForm.classes"/>
               <InputText label="Email" name="email" v-model="getDataForm.email"/>
               <InputSelect label="Gender" name="gender" :options="genderDesc" v-model="getDataForm.gender"/>
               <InputText label="Tanggal Lahir" name="birth_date" type="date" v-model="getDataForm.birth_date"/>

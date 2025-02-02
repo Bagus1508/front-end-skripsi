@@ -16,6 +16,9 @@ const filters = ref({
     email: { value: null, matchMode: FilterMatchMode.STARTS_WITH },  
 });
 
+//Data Constant
+const statusDesc = inject('status');
+
 //Filter Key
 const filterKey = Object.keys(filters.value);
 
@@ -30,14 +33,17 @@ onMounted(async () => {
         students.value = studentsData.map(student => {
             student.number_id = student.userDetails?.number_id,
             student.name = student.userDetails?.name,
-            student.class = student.userDetails?.classes,
+            student.classes = student.userDetails?.classes,
+            student.classes_desc = student.userDetails?.classes_desc,
             student.email = student.userDetails?.email,
             student.birth_date = student.userDetails?.birth_date,
             student.birth_place = student.userDetails?.birth_place,
             student.age = student.userDetails?.age,
             student.phone_number = student.userDetails?.phone_number,
+            student.gender = student.userDetails?.gender;
             student.gender_desc = student.gender ? 'Laki - Laki' : 'Perempuan';
             student.status = student.userDetails.status;
+            student.status_desc = statusDesc.find(status => status.value === student.userDetails.status)?.name || 'Tidak Diketahui';
             return student;
         });
 
@@ -180,7 +186,7 @@ const showDelete = async (data) => {
 
                 </template>
                 <template #empty> Data tidak ditemukan. </template>
-                <template #loading> Loading customers data. Please wait. </template>
+                <template #loading> Loading data. Please wait. </template>
                 <Column 
                     header="No"
                     >
@@ -191,14 +197,17 @@ const showDelete = async (data) => {
                 <Column field="id" sortable hidden header="ID"></Column>
                 <Column field="number_id" sortable header="NIS"></Column>
                 <Column field="name" sortable header="Nama"></Column>
-                <Column field="class" sortable header="Kelas"></Column>
+                <Column field="classes" hidden header="Kelas Id"></Column>
+                <Column field="classes_desc" sortable header="Kelas"></Column>
                 <Column field="email" sortable header="Email"></Column>
                 <Column field="gender_desc" sortable header="Jenis Kelamin"></Column>
+                <Column field="gender" sortable header="Jenis Kelamin"></Column>
                 <Column field="birth_date" sortable header="Tanggal Lahir"></Column>
                 <Column field="birth_place" sortable header="Tempat Lahir"></Column>
                 <Column field="age" sortable header="Umur"></Column>
                 <Column field="phone_number" sortable header="No Telepon"></Column>
-                <Column field="status" sortable header="Status"></Column>
+                <Column field="status" hidden header="Status"></Column>
+                <Column field="status_desc" sortable header="Status"></Column>
             </DataTable>
         </div>
     </div>

@@ -142,7 +142,7 @@ const deleteModal = () => {
 
                 </template>
                 <template #empty> Data tidak ditemukan. </template>
-                <template #loading> Loading customers data. Please wait. </template>
+                <template #loading> Loading data. Please wait. </template>
                 <Column 
                     header="No"
                     >

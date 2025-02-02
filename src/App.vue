@@ -1,5 +1,6 @@
 <script setup>
-import { provide } from 'vue';
+import { onMounted, provide, ref } from 'vue';
+const baseURLApi = import.meta.env.VITE_BASE_URL;
 
 const roles = [
   { value: 1, name: 'Admin' },
@@ -15,17 +16,52 @@ const gender = [
   { value: false, name: 'Perempuan' }
 ];
 
-const baseURLApi = import.meta.env.VITE_BASE_URL;
+const subjects = ref([]);
 
+onMounted(async () => {
+    try {
+        const response = await fetch(`${baseURLApi}/subjects`);
+        
+        const result = await response.json();
+        let subjectsData = result.data;
+
+        subjects.value = subjectsData.map(subject => ({
+          value: subject.id,
+          name: subject.name,
+        }));
+    } catch (error) {
+        console.error('Error fetching subjects:', error);
+    }
+});
+
+const classes = ref([]);
+
+onMounted(async () => {
+    try {
+        const response = await fetch(`${baseURLApi}/class-rooms`);
+        
+        const result = await response.json();
+        let classData = result.data;
+
+        classes.value = classData.map(classes => ({
+          value: classes.id,
+          name: classes.name,
+        }));
+    } catch (error) {
+        console.error('Error fetching class:', error);
+    }
+});
 // Menyediakan data agar dapat diakses di komponen anak
 provide('roles', roles);
 provide('status', status);
 provide('gender', gender);
+provide('subjects', subjects);
+provide('classes', classes);
 provide('baseURLApi', baseURLApi);
 </script>
 
 <template>
-    <div id="app" v-if="this.$route.meta.layout == 'AuthLayout'">
+    <div id="app" v-if="$route.meta.layout == 'AuthLayout'">
       <router-view/>
     </div>
     <div id="app" class="flex h-screen overflow-hidden" v-else>

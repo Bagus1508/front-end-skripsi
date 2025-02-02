@@ -1,8 +1,11 @@
 <script setup>
-import { ref, onMounted, reactive, provide } from 'vue';
+import { ref, onMounted, reactive, provide, inject } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+const baseURLApi = inject('baseURLApi');
 
 const school_class = ref([]);
 
@@ -14,21 +17,23 @@ const filters = ref({
 const loading = ref(true);
 onMounted(async () => {
   try {
-    const response = await fetch('/school_class.json');
-    school_class.value = await response.json();
+    const response = await fetch(`${baseURLApi}/class-rooms`);
+    const result = await response.json();
+    school_class.value = result.data;
+
     loading.value = false;
   } catch (error) { 
     console.error('Error fetching school_class:', error);
   }
 });
 
-const selectedUser = ref();
+const selectedData = ref();
 const cm = ref();
 
 const menuModel = ref([
-    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedUser)},
-    {label: 'View', icon: 'bi bi-eye', command: () => viewModal(selectedUser)},
-    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedUser)}
+    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedData)},
+    {label: 'View', icon: 'bi bi-eye', command: () => viewModal(selectedData)},
+    {label: 'Delete', icon: 'bi bi-trash', command: () => showDelete(selectedData)}
 ]);
 
 const onRowContextMenu = (event) => {
@@ -40,6 +45,7 @@ const showCreateModal = ref(false);
 const showDeleteModal = ref(false);
 const titleModal = ref('');
 const modalType = ref('');
+const editMode = ref(false);
 
 /* Modal Data */
 let getData = reactive({
@@ -54,18 +60,21 @@ provide('showCreateModal', showCreateModal);
 provide('showDeleteModal', showDeleteModal);
 provide('titleModal', titleModal);
 provide('modalType', modalType);
+provide('editMode', editMode);
 
 // Fungsi untuk membuka modal
 const createModal = () => {
     showCreateModal.value = true;
     titleModal.value = 'Tambah Kelas';
     modalType.value = 'create';
+    editMode.value = false;
 };
 
 const editModal = (data) => { 
     showCreateModal.value = true;
     titleModal.value = 'Edit Kelas';
     modalType.value = 'edit';
+    editMode.value = true;
 
     getData = Object.assign(getData, data.value);
 };
@@ -78,8 +87,46 @@ const viewModal = (data) => {
     getData = Object.assign(getData, data.value);
 };
 
-const deleteModal = () => {
-    showDeleteModal.value = true;
+const showDelete = async (data) => {
+  try {
+    const id = data.value.id;
+
+    // Konfirmasi sebelum menghapus
+    const confirmResult = await Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: "Data yang dihapus tidak dapat dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Batal',
+      confirmButtonText: 'Ya, hapus!',
+    });
+
+    // Jika pengguna menekan "Ya, hapus!"
+    if (confirmResult.isConfirmed) {
+      // Hapus data dari backend
+      await axios.delete(`${baseURLApi}/class-rooms/delete/${id}`);
+
+      // Hapus data dari state frontend
+      school_class.value = school_class.value.filter(school_class => school_class.id !== id);
+
+      // Tampilkan pesan sukses
+      Swal.fire({
+        title: 'Dihapus!',
+        text: 'Data kelas berhasil dihapus.',
+        icon: 'success',
+      });
+    }
+  } catch (error) {
+    // Tampilkan pesan error
+    Swal.fire({
+      title: 'Gagal!',
+      text: 'Terjadi kesalahan saat menghapus data.',
+      icon: 'error',
+    });
+    console.error('Error deleting student:', error);
+  }
 };
 
 </script>
@@ -87,10 +134,10 @@ const deleteModal = () => {
 <template>
     <div class="mt-2">
         <div class="relative overflow-x-auto">
-            <ContextMenu ref="cm" :model="menuModel" @hide="selectedUser = null" />
+            <ContextMenu ref="cm" :model="menuModel" @hide="selectedData = null" />
             <DataTable v-model:filters="filters" :value="school_class" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                contextMenu v-model:contextMenuSelection="selectedUser"
+                contextMenu v-model:contextMenuSelection="selectedData"
                 @rowContextmenu="onRowContextMenu"
                 dataKey="id" :loading="loading"
                 :globalFilterFields="['name']"
@@ -115,7 +162,7 @@ const deleteModal = () => {
 
                 </template>
                 <template #empty> Data tidak ditemukan. </template>
-                <template #loading> Loading customers data. Please wait. </template>
+                <template #loading> Loading data. Please wait. </template>
                 <Column 
                     header="No"
                     >
