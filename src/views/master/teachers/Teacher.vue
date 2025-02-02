@@ -39,13 +39,13 @@ onMounted(async () => {
             teacher.birth_place = teacher.userDetails?.birth_place,
             teacher.age = teacher.userDetails?.age,
             teacher.phone_number = teacher.userDetails?.phone_number,
-            teacher.gender = teacher.userDetails.gender;
-            teacher.gender_desc = teacher.gender ? 'Laki - Laki' : 'Perempuan';
-            teacher.status = teacher.userDetails.status;
-            teacher.status_desc = statusDesc.find(status => status.value === teacher.userDetails.status)?.name || 'Tidak Diketahui';
+            teacher.gender = teacher.userDetails?.gender;
+            teacher.gender_desc = teacher.userDetails?.gender ? 'Laki - Laki' : 'Perempuan';
+            teacher.status = teacher.userDetails?.status;
+            teacher.status_desc = statusDesc.find(status => status.value === teacher.userDetails?.status)?.name || 'Tidak Diketahui';
             return teacher;
         });
-        
+
         loading.value = false;
     } catch (error) {
         console.error('Error fetching teachers:', error);

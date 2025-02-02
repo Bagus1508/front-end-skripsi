@@ -51,12 +51,53 @@ onMounted(async () => {
         console.error('Error fetching class:', error);
     }
 });
+
+const users = ref([]);
+
+onMounted(async () => {
+    try {
+        const response = await fetch(`${baseURLApi}/users`);
+        
+        const result = await response.json();
+        let userData = result.data;
+
+        users.value = userData.map(users => ({
+          value: users.id,
+          name: users.userDetails?.name,
+        }));
+        
+    } catch (error) {
+        console.error('Error fetching class:', error);
+    }
+});
+
+const categories = ref([]);
+
+onMounted(async () => {
+    try {
+        const response = await fetch(`${baseURLApi}/categories`);
+        
+        const result = await response.json();
+        let categoryData = result.data;
+
+        categories.value = categoryData.map(categories => ({
+          value: categories.id,
+          name: categories.name,
+        }));
+
+    } catch (error) {
+        console.error('Error fetching class:', error);
+    }
+});
+
 // Menyediakan data agar dapat diakses di komponen anak
 provide('roles', roles);
 provide('status', status);
 provide('gender', gender);
 provide('subjects', subjects);
 provide('classes', classes);
+provide('users', users);
+provide('categories', categories);
 provide('baseURLApi', baseURLApi);
 </script>
 
