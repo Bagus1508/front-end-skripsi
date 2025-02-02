@@ -76,9 +76,6 @@ const handleSubmit = async () => {
       text: "Data Gagal Disimpan",
       icon: "error"
     });
-
-    // Tetap tutup modal meskipun gagal (opsional)
-    // showCreateModal.value = false;
   }
 };
 </script>
