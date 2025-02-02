@@ -93,8 +93,6 @@ const deleteModal = () => {
             <ContextMenu ref="cm" :model="menuModel" @hide="selectedUser = null" />
             <DataTable v-model:filters="filters" :value="roles" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                contextMenu v-model:contextMenuSelection="selectedUser"
-                @rowContextmenu="onRowContextMenu"
                 dataKey="id" :loading="loading"
                 :globalFilterFields="filterKey"
                 scrollable scrollHeight="400px">
@@ -108,12 +106,12 @@ const deleteModal = () => {
                                 <i class="bi bi-search mr-2 m-[5px]" />
                             </label>
                         </div>
-                        <div>
+                        <!-- <div>
                             <button class="px-5 bg-primary py-2 rounded-lg text-white" @click="createModal">
                                 Tambah Data +
                             </button>
                             <AddData v-model:showCreateModal="showCreateModal"/>
-                        </div>
+                        </div> -->
                     </div>
 
                 </template>
