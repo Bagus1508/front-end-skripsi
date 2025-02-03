@@ -9,7 +9,9 @@ const roles = [
 ];
 const status = [
   { value: 1, name: 'Aktif' },
-  { value: 2, name: 'Tidak Aktif' }
+  { value: 2, name: 'Tidak Aktif' },
+  { value: 3, name: 'Valid' },
+  { value: 4, name: 'Tidak Valid' },
 ];
 const gender = [
   { value: true, name: 'Laki - Laki' },

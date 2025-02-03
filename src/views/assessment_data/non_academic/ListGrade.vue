@@ -1,10 +1,14 @@
 <script setup>
-import { ref, onMounted, reactive, provide } from 'vue';
+import { ref, onMounted, reactive, provide, inject, watch } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+const baseURLApi = inject('baseURLApi');
 
-const listGrades = ref([]);
+const route = useRoute();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -18,32 +22,49 @@ const filters = ref({
 const filterKey = Object.keys(filters.value);
 
 const loading = ref(true);
+
+const listGrades = ref([]);
+const schedules = ref([]);
+
+const classesId = route.query.classes_id;
+let scheduleId = route.query.schedule_id;
+let subjectId = ref(null);
+
 onMounted(async () => {
-    try {
-        const response = await fetch('/list_grades.json');
-        let listGradesData = await response.json();
+  try {
+    // Lakukan kedua fetch secara bersamaan
+    const [nonAcademicResponse, schedulesResponse] = await Promise.all([
+      fetch(`${baseURLApi}/non-academic-reports?schedule_id=${scheduleId}`),
+      fetch(`${baseURLApi}/schedules?classes_id=${classesId}`)
+    ]);
 
-        listGradesData = listGradesData.map(student => {
-            student.gender_desc = student.gender ? 'Laki - Laki' : 'Perempuan';
-            student.status = student.is_active ? 'Aktif' : 'Tidak Aktif';
-            return student;
-        });
+    // Parsing JSON dari kedua response
+    const nonAcademicReportResult = await nonAcademicResponse.json();
+    const schedulesResult = await schedulesResponse.json();
 
-        listGrades.value = listGradesData;
+    // Simpan hasil ke variabel reaktif
+    listGrades.value = nonAcademicReportResult.data;
+    schedules.value = schedulesResult.data[0];
 
-        loading.value = false;
-    } catch (error) {
-        console.error('Error fetching listGrades:', error);
-    }
+    subjectId.value = schedules.value.subject_id;
+
+    loading.value = false;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 });
+let subjectIdVal = null;
+watch(subjectId, (newVal) => {
+    subjectIdVal = newVal 
+})
 
-const selectedUser = ref();
+const selectedData = ref();
 const cm = ref();
 
 const menuModel = ref([
-    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedUser)},
-    {label: 'View', icon: 'bi bi-eye', command: () => viewModal(selectedUser)},
-    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedUser)}
+    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedData)},
+    {label: 'View', icon: 'bi bi-eye', command: () => viewModal(selectedData)},
+    {label: 'Delete', icon: 'bi bi-trash', command: () => showDelete(selectedData)}
 ]);
 
 const onRowContextMenu = (event) => {
@@ -55,24 +76,11 @@ const showCreateModal = ref(false);
 const showDeleteModal = ref(false);
 const titleModal = ref('');
 const modalType = ref('');
+const editMode = ref(false);
 
 /* Modal Data */
 let getData = reactive({
-    id: '',
-    username: '',
-    name: '',
-    email: '',
-    role: '',
-    gender: '',
-    birth_date: '',
-    birth_date_place: '',
-    identification_number: '',
-    class: '',
-    age: '',
-    subject: '',
-    phone_number: '',
-    is_active: '',
-    created_at: ''
+
 });
 
 provide('getData', getData)
@@ -80,32 +88,77 @@ provide('showCreateModal', showCreateModal);
 provide('showDeleteModal', showDeleteModal);
 provide('titleModal', titleModal);
 provide('modalType', modalType);
+provide('editMode', editMode);
+provide('subjectId', subjectId);
+provide('scheduleId', scheduleId);
 
 // Fungsi untuk membuka modal
 const createModal = () => {
     showCreateModal.value = true;
-    titleModal.value = 'Tambah Siswa';
+    titleModal.value = 'Tambah Nilai Siswa';
     modalType.value = 'create';
+    editMode.value = false;
+    scheduleId;
+    subjectId.value;
 };
 
 const editModal = (data) => { 
     showCreateModal.value = true;
-    titleModal.value = 'Edit Siswa';
+    titleModal.value = 'Edit Nilai Siswa';
     modalType.value = 'edit';
+    editMode.value = true;
 
     getData = Object.assign(getData, data.value);
 };
 
 const viewModal = (data) => {
     showCreateModal.value = true;
-    titleModal.value = 'Detail Siswa';
+    titleModal.value = 'Detail Nilai Siswa';
     modalType.value = 'show';
 
     getData = Object.assign(getData, data.value);
 };
 
-const deleteModal = () => {
-    showDeleteModal.value = true;
+const showDelete = async (data) => {
+  try {
+    const id = data.value.id;
+    
+    // Konfirmasi sebelum menghapus
+    const confirmResult = await Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: "Data yang dihapus tidak dapat dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Batal',
+      confirmButtonText: 'Ya, hapus!',
+    });
+
+    // Jika pengguna menekan "Ya, hapus!"
+    if (confirmResult.isConfirmed) {
+      // Hapus data dari backend
+      await axios.delete(`${baseURLApi}/non-academic-reports/delete/${id}`);
+
+      // Hapus data dari state frontend
+      listGrades.value = listGrades.value.filter(listGrades => listGrades.id !== id);
+
+      // Tampilkan pesan sukses
+      Swal.fire({
+        title: 'Dihapus!',
+        text: 'Data Nilai berhasil dihapus.',
+        icon: 'success',
+      });
+    }
+  } catch (error) {
+    // Tampilkan pesan error
+    Swal.fire({
+      title: 'Gagal!',
+      text: 'Terjadi kesalahan saat menghapus data.',
+      icon: 'error',
+    });
+    console.error('Error deleting student:', error);
+  }
 };
 
 </script>
@@ -113,14 +166,14 @@ const deleteModal = () => {
 <template>
     <div class="mt-2">
         <div class="w-1/4 border border-[#D9D9D9] mb-[20px] p-3 rounded-md shadow-lg bg-white">
-            <div class="text-lg font-medium">Ekstrakurikuler</div>
-            <div>Basket</div>
+            <div class="text-lg font-medium">{{schedules.category_desc}}</div>
+            <div>{{schedules.subject_desc}}</div>
         </div>
         <div class="relative overflow-x-auto">
-            <ContextMenu ref="cm" :model="menuModel" @hide="selectedUser = null" />
+            <ContextMenu ref="cm" :model="menuModel" @hide="selectedData = null" />
             <DataTable v-model:filters="filters" :value="listGrades" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                contextMenu v-model:contextMenuSelection="selectedUser"
+                contextMenu v-model:contextMenuSelection="selectedData"
                 @rowContextmenu="onRowContextMenu"
                 dataKey="id" :loading="loading"
                 :globalFilterFields="filterKey"
@@ -154,9 +207,10 @@ const deleteModal = () => {
                     </template>
                 </Column>
                 <Column field="identification_number" sortable header="NIS"></Column>
-                <Column field="name" sortable header="Nama"></Column>
-                <Column field="class" sortable header="Kelas"></Column>
+                <Column field="student" sortable header="Nama"></Column>
+                <Column field="class_desc" sortable header="Kelas"></Column>
                 <Column field="score" sortable header="Nilai"></Column>
+                <Column field="achievement" sortable header="Pencapaian"></Column>
                 <Column field="gender_desc" sortable header="Jenis Kelamin"></Column>
                 <Column field="status" sortable header="Status"></Column>
             </DataTable>

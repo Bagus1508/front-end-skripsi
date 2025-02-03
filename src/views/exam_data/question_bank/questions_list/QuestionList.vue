@@ -1,11 +1,19 @@
 <script setup>
-import { ref, onMounted, reactive, provide } from 'vue';
+import { ref, onMounted, reactive, provide, inject } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
 import CardQuestion from './partials/Card.vue';
 import router from '../../../../routes/router';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+const baseURLApi = inject('baseURLApi');
 
+const route = useRoute();
+
+const scheduleData = ref([]);
+const scheduleId = ref('');
 const questionsList = ref([]);
 
 const filters = ref({
@@ -22,32 +30,34 @@ const filterKey = Object.keys(filters.value);
 const loading = ref(true);
 onMounted(async () => {
   try {
-    const response = await fetch('/questions_list.json');
-    let questionsListData = await response.json();
+    // Lakukan kedua fetch secara bersamaan
+    const [questionsResponse, schedulesResponse] = await Promise.all([
+      fetch(`${baseURLApi}/questions/${route.query.schedule_id}`),
+      fetch(`${baseURLApi}/schedules/${route.query.schedule_id}`)
+    ]);
 
-    //Map Data
-    questionsListData = questionsListData.map(schedule => {
-        schedule.status = schedule.is_active ? 'Aktif' : 'Tidak Aktif';
-        schedule.schedule_range = `${schedule.start_date} - ${schedule.end_date}`;
+    // Parsing JSON dari kedua response
+    const questionsResult = await questionsResponse.json();
+    const schedulesResult = await schedulesResponse.json();
 
-        return schedule;
-    });
-
-    questionsList.value = questionsListData;
+    // Simpan hasil ke variabel reaktif
+    questionsList.value = questionsResult.data;
+    scheduleData.value = schedulesResult.data;
 
     loading.value = false;
-  } catch (error) { 
-    console.error('Error fetching questionsList:', error);
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
 });
 
-const selectedSchedule = ref();
+
+const selectedData = ref();
 const cm = ref();
 
 const menuModel = ref([
-    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedSchedule)},
-    /* {label: 'Detail', icon: 'bi bi-eye', command: () => viewModal(selectedSchedule)}, */
-    {label: 'Delete', icon: 'bi bi-trash', command: () => deleteModal(selectedSchedule)}
+    {label: 'Edit', icon: 'bi bi-pencil-square', command: () => editModal(selectedData)},
+    /* {label: 'Detail', icon: 'bi bi-eye', command: () => viewModal(selectedData)}, */
+    {label: 'Delete', icon: 'bi bi-trash', command: () => showDelete(selectedData)}
 ]);
 
 const onRowContextMenu = (event) => {
@@ -59,13 +69,11 @@ const showCreateModal = ref(false);
 const showDeleteModal = ref(false);
 const titleModal = ref('');
 const modalType = ref('');
+const editMode = ref(false);
+
 
 /* Modal Data */
 let getData = reactive({
-    id: '',
-    name: '',
-    created_at: '',
-    updated_at: ''
 });
 
 provide('getData', getData)
@@ -73,18 +81,25 @@ provide('showCreateModal', showCreateModal);
 provide('showDeleteModal', showDeleteModal);
 provide('titleModal', titleModal);
 provide('modalType', modalType);
+provide('scheduleData', scheduleData);
+provide('editMode', editMode);
+provide('scheduleId', scheduleId);
+
 
 // Fungsi untuk membuka modal
 const createModal = () => {
     showCreateModal.value = true;
     titleModal.value = 'Tambah Soal';
     modalType.value = 'create';
+    editMode.value = false;
+    scheduleId.value = route.query.schedule_id;
 };
 
 const editModal = (data) => { 
     showCreateModal.value = true;
     titleModal.value = 'Edit Soal';
     modalType.value = 'edit';
+    editMode.value = true;
 
     getData = Object.assign(getData, data.value);
 };
@@ -101,9 +116,46 @@ const viewModal = (data) => {
     }
 };
 
+const showDelete = async (data) => {
+  try {
+    const id = data.value.id;
+    
+    // Konfirmasi sebelum menghapus
+    const confirmResult = await Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: "Data yang dihapus tidak dapat dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Batal',
+      confirmButtonText: 'Ya, hapus!',
+    });
 
-const deleteModal = () => {
-    showDeleteModal.value = true;
+    // Jika pengguna menekan "Ya, hapus!"
+    if (confirmResult.isConfirmed) {
+      // Hapus data dari backend
+      await axios.delete(`${baseURLApi}/questions/delete/${id}`);
+
+      // Hapus data dari state frontend
+      questionsList.value = questionsList.value.filter(questionsList => questionsList.id !== id);
+
+      // Tampilkan pesan sukses
+      Swal.fire({
+        title: 'Dihapus!',
+        text: 'Data soal berhasil dihapus.',
+        icon: 'success',
+      });
+    }
+  } catch (error) {
+    // Tampilkan pesan error
+    Swal.fire({
+      title: 'Gagal!',
+      text: 'Terjadi kesalahan saat menghapus data.',
+      icon: 'error',
+    });
+    console.error('Error deleting student:', error);
+  }
 };
 
 </script>
@@ -114,10 +166,10 @@ const deleteModal = () => {
     </div>
     <div class="mt-2">
         <div class="relative overflow-x-auto">
-            <ContextMenu ref="cm" :model="menuModel" @hide="selectedSchedule = null" />
+            <ContextMenu ref="cm" :model="menuModel" @hide="selectedData = null" />
             <DataTable v-model:filters="filters" :value="questionsList" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-                contextMenu v-model:contextMenuSelection="selectedSchedule"
+                contextMenu v-model:contextMenuSelection="selectedData"
                 @rowContextmenu="onRowContextMenu"
                 dataKey="id" :loading="loading"
                 :globalFilterFields="filterKey"

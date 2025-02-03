@@ -38,6 +38,9 @@ const handleSubmit = async () => {
     let url = '';
     let method = '';
 
+    console.log(editMode.value);
+    
+
     if (editMode.value) {
       url = `${baseURLApi}/subjects/update/${getData.id}`;
       method = 'put';

@@ -1,17 +1,20 @@
 <script setup>
+import { inject, onMounted } from 'vue';
 
+const schedules = inject('scheduleData');
 </script>
+
 
 <template>
     <div class="border border-[#a1a1a186] shadow-lg p-[10px] rounded-lg mb-[20px]">
-        <div class="font-medium mb-[10px]">Ujian Tengah Semester - Fisika</div>
+        <div class="font-medium mb-[10px]"></div>
         <!-- Kategori Ujian -->
         <div class="mb-[10px]">
             <div class="mb-[5px]">
                 Kategori
             </div>
             <div class="border border-[#a1a1a186] rounded-lg w-1/4 shadow-md p-2 text-gray-500">
-                Ujian Tengah Semester
+                {{schedules.category_desc}}
             </div>
         </div>
         <div class="mb-[5px] flex justify-between">
@@ -20,7 +23,7 @@
                     Nama Tes
                 </div>
                 <div class="border border-[#a1a1a186] rounded-lg w-1/2 shadow-md p-2 text-gray-500">
-                    Fisika
+                    {{schedules.subject_desc}}
                 </div>
             </div>
             <div class="w-1/2 flex justify-end items-end">

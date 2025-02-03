@@ -1,11 +1,17 @@
 <script setup>
-import { ref, onMounted, reactive, provide } from 'vue';
+import { ref, onMounted, reactive, provide, inject } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import AddData from './partials/AddData.vue';
 import DeleteData from './partials/DeleteData.vue';
 import router from '../../../routes/router';
+import { useRoute } from 'vue-router';
+const baseURLApi = inject('baseURLApi');
+
+const route = useRoute();
 
 const examSchedules = ref([]);
+//Data Constant
+const statusDesc = inject('status');
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -18,25 +24,36 @@ const filters = ref({
 //Filter Key
 const filterKey = Object.keys(filters.value);
 
+const classesData = ref([]);
+const scheduleData = ref([]);
+
 const loading = ref(true);
 onMounted(async () => {
   try {
-    const response = await fetch('/exam_schedules.json');
-    let examSchedulesData = await response.json();
+    const classesId = route.query.classes_id;
+    // Lakukan kedua fetch secara bersamaan
+    const [classesResponse, schedulesResponse] = await Promise.all([
+      fetch(`${baseURLApi}/class-rooms/${classesId}`),
+      fetch(`${baseURLApi}/schedules?classes_id=${classesId}`)
+    ]);
 
-    //Map Data
-    examSchedulesData = examSchedulesData.map(schedule => {
-        schedule.status = schedule.is_active ? 'Aktif' : 'Tidak Aktif';
-        schedule.schedule_range = `${schedule.start_date} - ${schedule.end_date}`;
+    // Parsing JSON dari kedua response
+    const classesResult = await classesResponse.json();
+    const schedulesResult = await schedulesResponse.json();
+
+    // Simpan hasil ke variabel reaktif
+    classesData.value = classesResult.data;
+    let schedules = schedulesResult.data;
+
+    scheduleData.value = schedules.map(schedule => {
+        schedule.status_desc = statusDesc.find(status => status.value === schedule.status)?.name || 'Tidak Diketahui';
 
         return schedule;
     });
 
-    examSchedules.value = examSchedulesData;
-
     loading.value = false;
-  } catch (error) { 
-    console.error('Error fetching examSchedules:', error);
+  } catch (error) {
+    console.error('Error fetching data:', error);
   }
 });
 
@@ -73,10 +90,14 @@ provide('modalType', modalType);
 
 const viewModal = (data) => {
     // Cek apakah data memiliki path atau route tujuan
-    if (data) {
+    if (data) {        
         router.push({
             path: '/data-nilai/akademik/daftar-nilai',
-            query: data.query || {},
+            query: {
+                ...data.query,
+                classes_id:data.value.classes_id,
+                schedule_id:data.value.id
+            },
         });
     } else {
         console.error("Data tidak valid atau tidak memiliki path.");
@@ -93,11 +114,11 @@ const deleteModal = () => {
 <template>
     <div class="mt-2">
         <div class="w-1/4 border border-[#D9D9D9] mb-[20px] p-3 rounded-md shadow-lg bg-white">
-            <div class="text-lg font-medium">Kelas XII - A  </div>
+            <div class="text-lg font-medium">{{ classesData.name }}</div>
         </div>
         <div class="relative overflow-x-auto">
             <ContextMenu ref="cm" :model="menuModel" @hide="selectedSchedule = null" />
-            <DataTable v-model:filters="filters" :value="examSchedules" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
+            <DataTable v-model:filters="filters" :value="scheduleData" resizableColumns columnResizeMode="fit" showGridlines paginator stripedRows :rows="10" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="margin-bottom: 10px;"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
                 contextMenu v-model:contextMenuSelection="selectedSchedule"
                 @rowContextmenu="onRowContextMenu"
@@ -127,11 +148,12 @@ const deleteModal = () => {
                     </template>
                 </Column>
                 <Column field="schedule_date" sortable header="Jadwal"></Column>
-                <Column field="subject" sortable header="Mata Pelajaran"></Column>
-                <Column field="category" sortable header="Kategori"></Column>
-                <Column field="user" sortable header="Guru Pengajar"></Column>
-                <Column field="class_name" sortable header="Kelas"></Column>
-                <Column field="status" sortable header="Status"></Column>
+                <Column field="name" sortable header="Nama"></Column>
+                <Column field="subject_desc" sortable header="Mata Pelajaran"></Column>
+                <Column field="category_desc" sortable header="Kategori"></Column>
+                <Column field="teacher" sortable header="Guru Pengajar"></Column>
+                <Column field="classes_desc" sortable header="Kelas"></Column>
+                <Column field="status_desc" sortable header="Status"></Column>
             </DataTable>
         </div>
     </div>
