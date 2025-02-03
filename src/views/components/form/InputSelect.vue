@@ -33,7 +33,7 @@ const modalType = inject('modalType');
       :name="name" 
       @change="emit('update:modelValue', selectedValue)"
     >
-    <option value="" disabled>== Pilih Role ==</option>
+    <option value="" disabled selected>== Pilih ==</option>
     <option v-for="option in options" :value="option.value" :key="option.value">{{ option.name }}</option>
     </select>
   </div>

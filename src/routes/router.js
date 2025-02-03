@@ -28,6 +28,7 @@ import PerformanceAcademic from '../views/assessment_data/performance_academic/P
 import DetailPerformanceAcademic from '../views/assessment_data/performance_academic/DetailPerformanceAcademic.vue';
 import Login from '../views/auth/Login.vue';
 import { nextTick } from 'vue';
+import Answers from '../views/exam_data/question_bank/questions_list/answers/Answers.vue';
 
 const routes = [
   /* Login */
@@ -88,6 +89,20 @@ const routes = [
     meta: { 
       title: 'Daftar Soal',
       pathName: 'Bank Soal - Jadwal - Daftar Soal',
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/data-ujian/bank-soal/daftar-soal/jawaban',
+    name: 'jawaban',
+    components: {
+      navbar: AppNavbar,
+      default: Answers,
+      sidebar: AppSidebar,
+    },
+    meta: { 
+      title: 'Jawaban',
+      pathName: 'Bank Soal - Jadwal - Daftar Soal - Jawaban',
       requiresAuth: true
     },
   },

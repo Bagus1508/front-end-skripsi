@@ -191,6 +191,7 @@ const showDelete = async (data) => {
                     </template>
                 </Column>
                 <Column field="schedule_range" sortable header="Jadwal"></Column>
+                <Column field="name" sortable header="Nama"></Column>
                 <Column field="start_time" sortable header="Jam Masuk"></Column>
                 <Column field="end_time" sortable header="Jam Selesai"></Column>
                 <Column field="subject_id" hidden header="Mata Pelajaran Id"></Column>
